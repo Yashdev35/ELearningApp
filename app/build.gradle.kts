@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.dbis_elearning_app"
-        minSdk = 25
+        minSdk = 29
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -70,5 +70,10 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation("design.spline:spline-runtime:+")
     implementation(libs.coil.compose)
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation(libs.font.awesome)
+    implementation (libs.androidx.material.icons.extended)
 
 }

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import com.example.dbis_elearning_app.Ui_Ux.UserScreens.Student.Navigation.AppNavigation
 import com.example.dbis_elearning_app.ui.theme.DBIS_eLearning_appTheme
 
 class MainActivity : ComponentActivity() {
@@ -16,7 +17,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-            LoginScreen(navController = navController)
+            AppNavigation(navController = navController)
         }
     }
 }

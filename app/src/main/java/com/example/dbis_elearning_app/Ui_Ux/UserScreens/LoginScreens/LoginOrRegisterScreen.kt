@@ -18,14 +18,12 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -42,10 +40,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import coil.compose.AsyncImage
 import com.example.dbis_elearning_app.R
+import com.example.dbis_elearning_app.Ui_Ux.UserScreens.Student.Navigation.ScrRegisterScreen
 import com.example.dbis_elearning_app.ui.theme.BackGroundBlack
-import com.example.dbis_elearning_app.ui.theme.CardBlack
 import kotlinx.coroutines.delay
 
 @Composable
@@ -76,9 +73,8 @@ fun LoginScreen(navController: NavController, backgroundColor: Color = Color.Bla
                     modifier = Modifier.padding(12.dp),
                 ){
                     Text(
-                        "Login", style = MaterialTheme.typography.headlineLarge, color = Color(
-                            CardBlack.toArgb()
-                        ), textAlign = TextAlign.Center,
+                        "Login", style = MaterialTheme.typography.headlineLarge, color = Color.White
+                        , textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.height(30.dp))
@@ -151,8 +147,8 @@ fun LoginScreen(navController: NavController, backgroundColor: Color = Color.Bla
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    TextButton(onClick = { navController.navigate("register") }) {
-                        Text("Don't have an account? Sign up", color = Color.White)
+                    TextButton(onClick = { navController.navigate(ScrRegisterScreen) }) {
+                        Text("Don't have an account? Sign up", color = Color.Cyan)
                     }
                 }
             }
@@ -170,65 +166,100 @@ fun RegisterScreen(navController: NavController, backgroundColor: Color = Color.
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .padding(16.dp),
+                .align(Alignment.BottomCenter),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("Register", style = MaterialTheme.typography.headlineSmall, color = Color.White)
-            Spacer(modifier = Modifier.height(32.dp))
+            Card(
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                    ,
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color(BackGroundBlack.toArgb()),
+                    )
+            ){
+                Column(
+                    modifier = Modifier.padding(12.dp),
+                ) {
+                    Text(
+                        "Register", style = MaterialTheme.typography.headlineLarge, color = Color.White
+                        , textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.height(32.dp))
 
-            OutlinedTextField(
-                value = name,
-                onValueChange = { name = it },
-                label = { Text("Name", color = Color.Gray) },
-                leadingIcon = { Icon(Icons.Default.Person, contentDescription = null, tint = Color.White) },
-                colors = TextFieldDefaults.colors(),
-                modifier = Modifier.fillMaxWidth()
-            )
+                    OutlinedTextField(
+                        value = name,
+                        onValueChange = { name = it },
+                        label = { Text("Name", color = Color.Gray) },
+                        leadingIcon = {
+                            Icon(
+                                Icons.Default.Person,
+                                contentDescription = null,
+                                tint = Color.White
+                            )
+                        },
+                        colors = TextFieldDefaults.colors(),
+                        modifier = Modifier.fillMaxWidth()
+                    )
 
-            Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
-            OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
-                label = { Text("Email", color = Color.Gray) },
-                leadingIcon = { Icon(Icons.Default.Email, contentDescription = null, tint = Color.White) },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                colors = TextFieldDefaults.colors(),
-                modifier = Modifier.fillMaxWidth()
-            )
+                    OutlinedTextField(
+                        value = email,
+                        onValueChange = { email = it },
+                        label = { Text("Email", color = Color.Gray) },
+                        leadingIcon = {
+                            Icon(
+                                Icons.Default.Email,
+                                contentDescription = null,
+                                tint = Color.White
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                        colors = TextFieldDefaults.colors(),
+                        modifier = Modifier.fillMaxWidth()
+                    )
 
-            Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
-            OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
-                label = { Text("Password", color = Color.Gray) },
-                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = Color.White) },
-                visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                colors = TextFieldDefaults.colors(),
-                modifier = Modifier.fillMaxWidth()
-            )
+                    OutlinedTextField(
+                        value = password,
+                        onValueChange = { password = it },
+                        label = { Text("Password", color = Color.Gray) },
+                        leadingIcon = {
+                            Icon(
+                                Icons.Default.Lock,
+                                contentDescription = null,
+                                tint = Color.White
+                            )
+                        },
+                        visualTransformation = PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        colors = TextFieldDefaults.colors(),
+                        modifier = Modifier.fillMaxWidth()
+                    )
 
-            Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
 
-            Button(
-                onClick = { /* Handle registration */ },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,
-                    contentColor = Color.Black
-                )
-            ) {
-                Text("Register")
-            }
+                    Button(
+                        onClick = { /* Handle registration */ },
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.White,
+                            contentColor = Color.Black
+                        )
+                    ) {
+                        Text("Register")
+                    }
 
-            Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
-            TextButton(onClick = { navController.navigateUp() }) {
-                Text("Already have an account? Log in", color = Color.White)
+                    TextButton(onClick = { navController.navigateUp() }) {
+                        Text("Already have an account? Log in", color = Color.Cyan)
+                    }
+                }
             }
         }
     }
