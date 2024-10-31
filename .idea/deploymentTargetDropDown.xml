@@ -2,26 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="DefaultPreview">
+      <entry key="PreviewCoursePreviewScreen">
         <State />
       </entry>
-      <entry key="LoginScreenPreview">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="SERIAL_NUMBER" />
-                  <value value="10BE2T0YTY0016C" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-10-25T10:02:00.685924900Z" />
-        </State>
+      <entry key="PreviewLearnHubDashboardScreen">
+        <State />
       </entry>
-      <entry key="LogoScreenPreview">
+      <entry key="PreviewStudentDashboardScreen">
+        <State />
+      </entry>
+      <entry key="PreviewVideoPlayerScreen">
+        <State />
+      </entry>
+      <entry key="UploadCourseScreenPreview">
         <State />
       </entry>
       <entry key="app">
