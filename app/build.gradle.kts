@@ -2,6 +2,9 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     alias(libs.plugins.kotlin.serialization)
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -14,6 +17,13 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        // Initialize manifestPlaceholders with mutable map directly
+        manifestPlaceholders.putAll(
+            mapOf(
+                "auth0Domain" to "@string/com_auth0_domain",
+                "auth0Scheme" to "@string/com_auth0_scheme"
+            )
+        )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -39,6 +49,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -59,6 +70,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -75,5 +87,20 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation(libs.font.awesome)
     implementation (libs.androidx.material.icons.extended)
-
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    //hilt
+    implementation(libs.androidx.hilt.navigation.compose)
+    //dagger-hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+    //video format converter ffmpeg
+    implementation (libs.ffmpeg.kit.full)
+    // ExoPlayer for video streaming
+    implementation(libs.exoplayer)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
+    // Auth0 dependencies
+    implementation (libs.auth0)
+    implementation (libs.jwtdecode)
 }

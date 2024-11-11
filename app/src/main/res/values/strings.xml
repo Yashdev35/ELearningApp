@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">DBIS_eLearning_app</string>
+    <!-- SnackBar messages-->
+    <string name="login_success_message">Successfully logged in! %1$s</string>
+    <string name="login_failure_message">You need to log in to use the app.</string>
+    <string name="general_failure_with_exception_code">Failed - exception code: %1$s</string>
+    <string name="general_success_message">Success!</string>
 </resources>
