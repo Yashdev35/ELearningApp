@@ -1,2 +1,2 @@
 /build
-/src/main/res/xml/auth0.xml
+app/src/main/res/values/auth0.xml
