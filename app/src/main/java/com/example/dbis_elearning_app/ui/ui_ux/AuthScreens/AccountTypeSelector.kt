@@ -21,6 +21,7 @@ import com.example.dbis_elearning_app.ui.theme.TextCyan
 
 @Composable
 fun AccountTypeScreen(
+    userName: String ="Default",
     onTypeSelected:(String) -> Unit,
     onBackPressed: () -> Unit
 ) {
@@ -48,6 +49,13 @@ fun AccountTypeScreen(
             }
 
             // Header
+            Text(
+                text = "Welcome, $userName",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                modifier = Modifier.padding(top = 24.dp)
+            )
             Text(
                 text = "Select Account Type",
                 fontSize = 28.sp,

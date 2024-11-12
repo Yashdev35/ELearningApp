@@ -99,29 +99,6 @@ fun HomePage() {
                         .fillMaxSize()
                         .padding(16.dp)
                 ) {
-                    // Header
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.learnhub_logo),
-                            contentDescription = "Notifications",
-                            modifier = Modifier.fillMaxWidth(0.5f),
-                        )
-                        OutlinedTextField(
-                            value = "",
-                            onValueChange = {},
-                            placeholder = { Text("Search for courses") },
-                            modifier = Modifier.fillMaxWidth(),
-                            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                            colors = TextFieldDefaults.colors()
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(10.dp))
-
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.fillMaxWidth()

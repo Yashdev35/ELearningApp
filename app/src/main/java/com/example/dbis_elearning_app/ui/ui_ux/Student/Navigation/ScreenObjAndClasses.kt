@@ -6,7 +6,9 @@ import kotlinx.serialization.Serializable
 object ScrLogo
 
 @Serializable
-object ScrAccountTypeSelector
+data class ScrAccountTypeSelector(
+    val name: String
+)
 
 @Serializable
 object ScrStudentApp
@@ -24,3 +26,6 @@ object ScrStuLoginStage2
 object HomeScreen
 @Serializable
 object ScrDashboardStu
+
+@Serializable
+object ScrSearchScreenStu
