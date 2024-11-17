@@ -2,6 +2,8 @@ package com.example.dbis_elearning_app.di
 
 import com.example.dbis_elearning_app.Api.APIIns.InstructorApi
 import com.example.dbis_elearning_app.Api.APIStu.StudentApi
+import com.example.dbis_elearning_app.data.student.repository.StuSignUpRepository
+import com.example.dbis_elearning_app.data.student.repository.StuSignUpRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,5 +38,11 @@ object NetworkModule {
     @Singleton
     fun provideStudentApi(retrofit: Retrofit): StudentApi {
         return retrofit.create(StudentApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(apiService: StudentApi): StuSignUpRepository {
+        return StuSignUpRepositoryImpl(apiService)
     }
 }

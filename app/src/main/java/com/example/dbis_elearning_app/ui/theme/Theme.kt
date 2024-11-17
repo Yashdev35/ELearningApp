@@ -10,6 +10,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -19,6 +20,18 @@ private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
     secondary = PurpleGrey80,
     tertiary = Pink80
+)
+val darkColorScheme = darkColorScheme(
+    background = Color(0xFF121212),
+    surface = Color(0xFF1E1E1E),
+    primary = Color(0xFFD86D37),
+    onPrimary = Color.White,
+    primaryContainer = Color(0xFFD86D37),
+    onPrimaryContainer = Color.White,
+    secondary = Color(0xFF03DAC6),
+    onSecondary = Color.Black,
+    onBackground = Color.White,
+    onSurface = Color.White
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -50,8 +63,8 @@ fun DBIS_eLearning_appTheme(
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        darkTheme -> darkColorScheme
+        else -> darkColorScheme
     }
     val view = LocalView.current
     if (!view.isInEditMode) {

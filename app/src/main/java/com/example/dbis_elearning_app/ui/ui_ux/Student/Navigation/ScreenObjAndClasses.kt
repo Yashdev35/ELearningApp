@@ -22,6 +22,9 @@ object ScrRegisterScreen
 object ScrStuLoginStage1
 @Serializable
 object ScrStuLoginStage2
+
+@Serializable
+object ScrMainLandingScr
 @Serializable
 object HomeScreen
 @Serializable
@@ -29,3 +32,6 @@ object ScrDashboardStu
 
 @Serializable
 object ScrSearchScreenStu
+
+@Serializable
+object ScrCoursePreviewScr

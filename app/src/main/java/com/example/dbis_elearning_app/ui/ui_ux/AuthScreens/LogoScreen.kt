@@ -54,7 +54,7 @@ fun LogoScreen(
         )
         // Logo
         Image(
-            painter = painterResource(id = R.drawable.learnhub_logo), // Replace with your logo resource
+            painter = painterResource(id = R.drawable.dbis_project_logo_amber_removebg), // Replace with your logo resource
             contentDescription = "Logo",
             modifier = Modifier
                 .size(100.dp) // Adjust size as needed

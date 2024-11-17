@@ -79,16 +79,16 @@ fun AccountTypeScreen(
                 AccountTypeCard(
                     title = "Student",
                     icon = Icons.Default.School,
-                    isSelected = selectedType == "student",
-                    onClick = { selectedType = "student" },
+                    isSelected = selectedType == "Student",
+                    onClick = { selectedType = "Student" },
                     modifier = Modifier.weight(1f).padding(end = 8.dp)
                 )
 
                 AccountTypeCard(
                     title = "Instructor",
                     icon = Icons.Default.Person,
-                    isSelected = selectedType == "instructor",
-                    onClick = { selectedType = "instructor" },
+                    isSelected = selectedType == "Instructor",
+                    onClick = { selectedType = "Instructor" },
                     modifier = Modifier.weight(1f).padding(start = 8.dp)
                 )
             }

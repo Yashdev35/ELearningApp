@@ -27,7 +27,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.DBIS_eLearning_app">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,7 +43,15 @@
                     android:scheme="@string/com_auth0_scheme"
                     android:host="@string/com_auth0_domain" />
             </intent-filter>
+
         </activity>
+        <!-- Register PaymentActivity -->
+        <activity android:name=".PaymentActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_test_L3zcJSEgi9lvEQ" />
     </application>
 
 </manifest>

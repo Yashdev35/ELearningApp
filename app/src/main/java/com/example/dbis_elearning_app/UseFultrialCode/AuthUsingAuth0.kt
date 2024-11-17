@@ -17,17 +17,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import com.example.dbis_elearning_app.data.model.User
+import com.example.dbis_elearning_app.data.model.Student
 
 @Composable
 fun UserScreen(
-    user: User?,
+    student: Student?,
     onLogin: () -> Unit,
     onLogout: () -> Unit
 ) {
-    if (user != null) {
-        LoggedInScreen(user, onLogout)
-        Log.d("UserScreen", user.idToken.toString())
+    if (student != null) {
+        LoggedInScreen(student, onLogout)
+        Log.d("UserScreen", student.idToken.toString())
     } else {
         LoginScreen(onLogin)
     }
@@ -49,16 +49,16 @@ fun LoginScreen(onLogin: () -> Unit) {
 }
 
 @Composable
-fun LoggedInScreen(user: User, onLogout: () -> Unit) {
+fun LoggedInScreen(student: Student, onLogout: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Welcome, ${user.name}")
+        Text(text = "Welcome, ${student.name}")
         Spacer(modifier = Modifier.height(8.dp))
         Image(
-            painter = rememberImagePainter(user.picture),
+            painter = rememberImagePainter(student.picture),
             contentDescription = null,
             modifier = Modifier.size(100.dp).clip(CircleShape)
         )

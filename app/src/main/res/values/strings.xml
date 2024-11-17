@@ -5,4 +5,19 @@
     <string name="login_failure_message">You need to log in to use the app.</string>
     <string name="general_failure_with_exception_code">Failed - exception code: %1$s</string>
     <string name="general_success_message">Success!</string>
+
+
+<!--    image strings-->
+    <string name="courseImage1" translatable="false">https://images.unsplash.com/photo-1613274451563-07661becd6c3?w=500&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8d2hpdGUlMjBiaWtpbml8ZW58MHx8MHx8fDA%3D</string>
+    <string name="courseImage2" translatable="false">https://images.unsplash.com/photo-1606792109963-7b34205b1333?w=500&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHdoaXRlJTIwYmlraW5pfGVufDB8fDB8fHww</string>
+    <string name="courseImage3" translatable="false">https://media.istockphoto.com/id/928866786/photo/woman-in-bikini-using-phone.webp?a=1&amp;b=1&amp;s=612x612&amp;w=0&amp;k=20&amp;c=s-LJlraqPT9_INv5CR06KhBbPoxD9LKYjMb20dWdT8c=</string>
+    <string name="courseImage4" translatable="false">https://images.unsplash.com/photo-1596170993547-e433490afea8?w=500&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHdoaXRlJTIwYmlraW5pfGVufDB8fDB8fHww</string>
+
+    <string name="HomeScreenCourseImage1" translatable="false">
+    https://img.freepik.com/free-psd/education-banner-template_23-2148914769.jpg?t=st=1731736648~exp=1731740248~hmac=2a789ab61384e72b7817c251bcea7e673725fa6a355c487105a786f9db1906a0&amp;w=1060
+</string>
+    <string name="HomeScreenCourseImage2" translatable="false">
+    https://img.freepik.com/free-vector/hand-drawn-online-college-template-design_23-2150574159.jpg?t=st=1731736040~exp=1731739640~hmac=61b9f5e00827dd61b7a40d55451a22fcc1f35c9b813bd9803d8a652b21250385&amp;w=1060
+</string>
+
 </resources>

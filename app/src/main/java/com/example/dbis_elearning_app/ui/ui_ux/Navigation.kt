@@ -40,8 +40,9 @@ fun AppNavigation(
         }
         composable<ScrLoginScreen> {
             val authViewModel: AuthViewModel = hiltViewModel()
-            val user by remember { authViewModel.user }
-            LoginScreen(user = user, onLogin = {authViewModel.login(activity)}, navController = navController)
+            val user by remember { authViewModel.student }
+            LoginScreen(student = user, onLogin = {authViewModel.login(activity)}, navController = navController,
+                onLogout = {authViewModel.logout(activity)})
         }
         composable<ScrRegisterScreen> {
             RegisterScreen(navController = navController)
@@ -60,7 +61,7 @@ fun AppNavigation(
         )
         }
         composable<ScrStudentApp> {
-            StudentApp(navController = navController)
+            StudentApp()
         }
         composable<ScrInstructorApp> {
             InstructorApp()

@@ -1,3 +1,4 @@
+import android.util.Log
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
@@ -43,29 +44,32 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.dbis_elearning_app.R
-import com.example.dbis_elearning_app.data.model.User
-import com.example.dbis_elearning_app.ui_ux.UserScreens.Student.Navigation.ScrRegisterScreen
+import com.example.dbis_elearning_app.data.model.Student
 import com.example.dbis_elearning_app.ui.theme.BackGroundBlack
 import com.example.dbis_elearning_app.ui_ux.UserScreens.Student.Navigation.ScrAccountTypeSelector
+import com.example.dbis_elearning_app.viewModel.StudentViewModel.StudentSignUpViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
-    user: User?,
+    student: Student?,
     onLogin: () -> Unit,
     navController: NavController,
-    backgroundColor: Color = Color.Black
+    onLogout: () -> Unit = {},
+    backgroundColor: Color = Color.Black,
 ) {
     val scope = rememberCoroutineScope()
     var isLoading by remember { mutableStateOf(false) }
 
-    LaunchedEffect(user) {
-        if (user != null) {
-            navController.navigate(ScrAccountTypeSelector(name = user.name))
+    LaunchedEffect(student) {
+        if (student != null) {
+            Log.d("LoginScreen", "Navigating to AccountTypeSelector ${student.name}")
+            navController.navigate(ScrAccountTypeSelector(name = student.name))
         }
     }
 
@@ -93,7 +97,7 @@ fun LoginScreen(
 
                     Button(
                         onClick = {
-                            if (user == null) {
+                            if (student == null) {
                                 isLoading = true
                                 scope.launch {
                                     onLogin()
@@ -118,9 +122,15 @@ fun LoginScreen(
                         color = Color.Cyan,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 30.dp),
+                            .padding(bottom = 2.dp),
                         textAlign = TextAlign.Center
                     )
+                    TextButton(onClick = { onLogout() }) {
+                        Text("LOut", color = Color.Red,modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 15.dp),
+                            textAlign = TextAlign.Center)
+                    }
                 }
             }
         }
@@ -346,7 +356,7 @@ fun SocialLoginButton(
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    var user = User("")
+    var student = Student("")
     val navController = rememberNavController();
-    LoginScreen(user = user,{}, navController =navController)
+    LoginScreen(student = student,{}, navController =navController)
 }

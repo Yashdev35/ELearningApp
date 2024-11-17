@@ -5,11 +5,13 @@ plugins {
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
+    id("com.google.relay")
 }
 
 android {
     namespace = "com.example.dbis_elearning_app"
     compileSdk = 34
+    sourceSets["main"].assets.srcDirs("src/main/ui-packages")
 
     defaultConfig {
         applicationId = "com.example.dbis_elearning_app"
@@ -71,6 +73,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -97,10 +100,20 @@ dependencies {
     //video format converter ffmpeg
     implementation (libs.ffmpeg.kit.full)
     // ExoPlayer for video streaming
-    implementation(libs.exoplayer)
-    implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.ui)
     // Auth0 dependencies
     implementation (libs.auth0)
     implementation (libs.jwtdecode)
+    implementation(libs.okhttp)
+    implementation (libs.auth0.v1400)
+    //razar pay
+    implementation (libs.checkout)
+    //exoplayer
+    implementation(libs.androidx.media3.exoplayer.v120)
+    implementation(libs.androidx.media3.ui.v120)
+    implementation(libs.androidx.media3.exoplayer.hls)
+    // Room Database
+    implementation (libs.androidx.room.runtime)
+    kapt (libs.androidx.room.compiler)
+
 }
