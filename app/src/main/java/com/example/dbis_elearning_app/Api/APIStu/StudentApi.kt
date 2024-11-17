@@ -4,6 +4,7 @@ import androidx.room.Upsert
 import com.example.dbis_elearning_app.data.model.Student
 import com.example.dbis_elearning_app.data.student.model.ApiResponse
 import com.example.dbis_elearning_app.data.student.model.UserSignUpRequest
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -13,21 +14,21 @@ import retrofit2.http.Path
 
 interface StudentApi {
     @POST("api/v1/user/app/signup")
-    suspend fun signUpUser(@Body userSignUpRequest: UserSignUpRequest): ApiResponse<Student>
+    suspend fun signUpUser(@Body userSignUpRequest: UserSignUpRequest): Response<ApiResponse<Student>>
 
     @POST("api/v1/user/app/signup")
-    suspend fun signUpUserWith(@Body accessToken: String): ApiResponse<Student>
+    suspend fun signUpUserWith(@Body accessToken: String): Response<ApiResponse<Student>>
 
     @GET("api/v1/user/app/signup")
-    suspend fun getUser(): ApiResponse<Student>
+    suspend fun getUser(): Response<ApiResponse<Student>>
 
     @GET("api/v1/user/app/{id}")
-    suspend fun getStudent(@Path("id") id: String): ApiResponse<Student>
+    suspend fun getStudent(@Path("id") id: String): Response<ApiResponse<Student>>
 
     @PUT("api/v1/user/app/{id}")
-    suspend fun updateStudent(@Path("id") id: String, @Body student: Student): ApiResponse<Student>
+    suspend fun updateStudent(@Path("id") id: String, @Body student: Student): Response<ApiResponse<Student>>
 
     @DELETE("api/v1/user/app/{id}")
-    suspend fun deleteStudent(@Path("id") id: String): ApiResponse<Unit>
-
+    suspend fun deleteStudent(@Path("id") id: String): Response<ApiResponse<Unit>>
 }
+

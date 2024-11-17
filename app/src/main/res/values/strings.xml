@@ -19,5 +19,6 @@
     <string name="HomeScreenCourseImage2" translatable="false">
     https://img.freepik.com/free-vector/hand-drawn-online-college-template-design_23-2150574159.jpg?t=st=1731736040~exp=1731739640~hmac=61b9f5e00827dd61b7a40d55451a22fcc1f35c9b813bd9803d8a652b21250385&amp;w=1060
 </string>
+    <string name="demoVideoUrl" translatable="false">"https://res.cloudinary.com/dcdlxeu52/video/upload/v1731861305/courses/course_1731860592247/promo/pdaghb8har5govvqpxpa.mp4"</string>
 
 </resources>

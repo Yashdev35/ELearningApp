@@ -15,49 +15,72 @@ import com.example.dbis_elearning_app.data.student.model.UserSignUpRequest
 import com.example.dbis_elearning_app.data.student.repository.StuSignUpRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
 class StudentSignUpViewModel @Inject constructor(
     private val userRepository: StuSignUpRepository
 ) : ViewModel() {
-    private val _isLogin = mutableStateOf(false)
-    val isLogin: State<Boolean> = _isLogin
-    private val _signUpResult = MutableLiveData<ApiResponse<Student>>()
-    val signUpResult: LiveData<ApiResponse<Student>> = _signUpResult
 
-     suspend fun signUpUser(name: String, email: String, password: String) {
+    private val _isLogin = mutableStateOf(false)
+    val isLogin: State<Boolean> get() = _isLogin
+
+    private val _signUpResult = MutableLiveData<ApiResponse<Student>>()
+    val signUpResult: LiveData<ApiResponse<Student>> get() = _signUpResult
+
+    fun signUpUser(name: String, email: String, password: String) {
         viewModelScope.launch {
+            _isLogin.value = true
             try {
-                _isLogin.value = true
-                Log.d("SignUp", "Signing up user...")
+                Log.d("SignUp", "Initiating user sign-up...")
                 val request = UserSignUpRequest(name, email, password)
                 val response = userRepository.signUpUser(request)
-                _signUpResult.postValue(response)
-                _isLogin.value = false
-                Log.d("SignUp", "User created successfully: ${response.data?.name}")
+
+                handleApiResponse(response)
             } catch (e: Exception) {
+                handleError(e)
+            } finally {
                 _isLogin.value = false
-                _signUpResult.postValue(ApiResponse(500, null, "An error occurred: ${e.message}"))
-                Log.e("SignUp", "An error occurred: ${e.message}")
             }
         }
     }
 
-    suspend fun signUpUserWith(accessToken: String) {
+    fun signUpUserWith(accessToken: String) {
         viewModelScope.launch {
+            _isLogin.value = true
             try {
-                _isLogin.value = true
-                Log.d("SignUp", "Signing up user...")
+                Log.d("SignUp", "Signing up user with access token...")
                 val response = userRepository.signUpUserWith(accessToken)
-                _signUpResult.postValue(response)
-                _isLogin.value = false
-                Log.d("SignUp", "User created successfully: ${response.data?.name}")
+
+                handleApiResponse(response)
             } catch (e: Exception) {
+                handleError(e)
+            } finally {
                 _isLogin.value = false
-                _signUpResult.postValue(ApiResponse(500, null, "An error occurred: ${e.message}"))
-                Log.e("SignUp", "An error occurred: ${e.message}")
             }
         }
+    }
+
+    private fun handleApiResponse(response: Response<ApiResponse<Student>>) {
+        if (response.isSuccessful) {
+            val apiResponse = response.body()
+            if (apiResponse?.statusCode == 200) {
+                Log.d("SignUp", "User signed up successfully: ${apiResponse.data?.name}")
+                _signUpResult.postValue(apiResponse)
+            } else {
+                Log.e("SignUp", "API Error: ${apiResponse?.message}")
+                _signUpResult.postValue(ApiResponse(apiResponse?.statusCode ?: 400, null, apiResponse?.message ?: "Unknown error"))
+            }
+        } else {
+            val errorMessage = response.errorBody()?.string() ?: "Unknown server error"
+            Log.e("SignUp", "Server Error: $errorMessage")
+            _signUpResult.postValue(ApiResponse(response.code(), null, errorMessage))
+        }
+    }
+
+    private fun handleError(e: Exception) {
+        Log.e("SignUp", "An exception occurred: ${e.message}")
+        _signUpResult.postValue(ApiResponse(500, null, "An error occurred: ${e.message}"))
     }
 }

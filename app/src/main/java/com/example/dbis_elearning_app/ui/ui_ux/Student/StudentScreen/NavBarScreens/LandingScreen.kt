@@ -50,9 +50,15 @@ fun LandScrMainCont(studentNavigationViewModel: StudentNavigationViewModel, navC
     ){
         when(studentNavigationViewModel.navigationItem){
             NavigationItem.HOME -> { HomePage(navController = navController) }
-            NavigationItem.CAREER -> {CartScreen()}
-            NavigationItem.LEARN -> {MyLearningScreen()}
-            NavigationItem.SEARCH -> {SearchScreen()}
+            NavigationItem.CAREER -> {
+                CartScreen()
+            }
+            NavigationItem.LEARN -> {
+                MyLearningScreen()
+            }
+            NavigationItem.SEARCH -> {
+                SearchScreen()
+            }
             NavigationItem.PROFILE -> {
                 val subjects = listOf("Mathematics", "Science", "English")
                 val certificates = listOf(

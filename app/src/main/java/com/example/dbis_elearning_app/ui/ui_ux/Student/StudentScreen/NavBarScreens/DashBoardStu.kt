@@ -2,23 +2,18 @@ package com.example.dbis_elearning_app.ui_ux.UserScreens.Student.StudentScreen
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -28,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.example.dbis_elearning_app.R
 import com.example.dbis_elearning_app.ui.ui_ux.CommonComponents.ActivityCalendar
 import com.example.dbis_elearning_app.ui.ui_ux.CommonComponents.MainDrawer
+import com.example.dbis_elearning_app.ui.ui_ux.CommonComponents.ProfileSection
 
 // Define custom colors for the black and white theme
 val BlackTransparent = Color.Black.copy(alpha = 0.95f)
@@ -64,7 +60,9 @@ fun StudentDashBoard(
                     profileImageRes = userProfileImageRes,
                     userName = userName,
                     userEmail = userEmail,
-                    onEditProfile = onEditProfile
+                    onEditProfile = onEditProfile,
+                    isEditProfile = false,
+                    onProfileImageChanged = {}
                 )
                 Spacer(modifier = Modifier.height(16.dp))
             }
@@ -94,39 +92,6 @@ fun StudentDashBoard(
                 SubjectProgressCard(subject = subject)
                 Spacer(modifier = Modifier.height(8.dp))
             }
-        }
-    }
-}
-
-@Composable
-fun ProfileSection(
-    profileImageRes: Int,
-    userName: String,
-    userEmail: String,
-    onEditProfile: () -> Unit
-) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            painter = painterResource(id = profileImageRes),
-            contentDescription = "Profile Picture",
-            modifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape),
-            contentScale = ContentScale.Crop
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(userName, style = MaterialTheme.typography.titleLarge, color = PureWhite)
-        Text(userEmail, style = MaterialTheme.typography.bodyMedium, color = LightGray)
-        Spacer(modifier = Modifier.height(8.dp))
-        Button(
-            onClick = onEditProfile,
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xA9000000)),
-            shape = RoundedCornerShape(30.dp)
-        ) {
-            Icon(Icons.Default.Edit, contentDescription = "Edit Profile", tint = Color.White)
         }
     }
 }
