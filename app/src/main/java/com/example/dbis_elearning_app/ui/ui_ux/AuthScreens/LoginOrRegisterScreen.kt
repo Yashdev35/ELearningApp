@@ -48,15 +48,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.dbis_elearning_app.R
+import com.example.dbis_elearning_app.SignUpScreen
 import com.example.dbis_elearning_app.data.model.Student
 import com.example.dbis_elearning_app.ui.theme.BackGroundBlack
 import com.example.dbis_elearning_app.ui_ux.UserScreens.Student.Navigation.ScrAccountTypeSelector
+import com.example.dbis_elearning_app.ui_ux.UserScreens.Student.Navigation.ScrMainLandingScr
+import com.example.dbis_elearning_app.ui_ux.UserScreens.Student.Navigation.ScrStuLoginStage1
 import com.example.dbis_elearning_app.viewModel.StudentViewModel.StudentSignUpViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(
+fun AuthScreen(
     student: Student?,
     onLogin: () -> Unit,
     navController: NavController,
@@ -69,11 +72,11 @@ fun LoginScreen(
     LaunchedEffect(student) {
         if (student != null) {
             Log.d("LoginScreen", "Navigating to AccountTypeSelector ${student.name}")
-            navController.navigate(ScrAccountTypeSelector(name = student.name))
+            navController.navigate(ScrMainLandingScr)
         }
     }
 
-    BoxWithAnimatedImage(backgroundColor) {
+    BoxWithAnimatedImage(navController,backgroundColor) {
         Column(
             modifier = Modifier
                 .padding(horizontal = 0.5.dp)
@@ -116,15 +119,18 @@ fun LoginScreen(
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
-
+                    TextButton(onClick = {
+                        navController.navigate(ScrStuLoginStage1)
+                    }) {
                     Text(
-                        "Click 'Get Started' to login/register",
+                        "Wanna do it manually? Click here",
                         color = Color.Cyan,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 2.dp),
                         textAlign = TextAlign.Center
                     )
+                }
                     TextButton(onClick = { onLogout() }) {
                         Text("LOut", color = Color.Red,modifier = Modifier
                             .fillMaxWidth()
@@ -181,7 +187,7 @@ fun RegisterScreen(navController: NavController, backgroundColor: Color = Color.
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    BoxWithAnimatedImage(backgroundColor) {
+    BoxWithAnimatedImage(navController,backgroundColor) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -287,9 +293,11 @@ fun RegisterScreen(navController: NavController, backgroundColor: Color = Color.
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BoxWithAnimatedImage(
+    navC: NavController,
     backgroundColor: Color,
-    content: @Composable BoxScope.() -> Unit
+    content: @Composable BoxScope.() -> Unit,
 ) {
+    val studentSignUpViewModel: StudentSignUpViewModel = hiltViewModel()
     val imageResources = listOf(R.drawable.login_image1, R.drawable.chem_std, R.drawable.login_page_image1)
     var imageIndex by remember { mutableStateOf(0) }
 
@@ -313,15 +321,20 @@ fun BoxWithAnimatedImage(
             modifier = Modifier
                 .fillMaxWidth()
         ) { resId ->
-            Image(
-                painter = painterResource(id = resId),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(top = 170.dp)
-                    .width(300.dp)
-                    .height(300.dp),
-                contentScale = ContentScale.Crop
-            )
+            Column(
+                modifier = Modifier.align(Alignment.Center),
+            ) {
+                Image(
+                    painter = painterResource(id = resId),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(top = 170.dp)
+                        .width(300.dp)
+                        .height(300.dp)
+                        .align(Alignment.CenterHorizontally),
+                    contentScale = ContentScale.Crop
+                )
+            }
         }
         content()
     }
@@ -358,5 +371,5 @@ fun SocialLoginButton(
 fun LoginScreenPreview() {
     var student = Student("")
     val navController = rememberNavController();
-    LoginScreen(student = student,{}, navController =navController)
+    AuthScreen(student = student,{}, navController =navController)
 }

@@ -189,3 +189,9 @@ fun StudentRegistrationStageOnePreview() {
         onBack = {}
     )
 }
+
+data class DisplayData(
+    var name: String = "Yash",
+    var email:String = "yashkumbkarn85@gmail.com",
+    var profilepic: String = ""
+)

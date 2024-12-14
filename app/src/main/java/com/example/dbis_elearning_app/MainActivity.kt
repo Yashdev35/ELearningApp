@@ -14,9 +14,11 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
+import com.example.dbis_elearning_app.UseFultrialCode.DashboardScreen
 import com.example.dbis_elearning_app.ui.theme.DBIS_eLearning_appTheme
 import com.example.dbis_elearning_app.ui.theme.darkColorScheme
 import com.example.dbis_elearning_app.ui_ux.UserScreens.AppNavigation
+import com.example.dbis_elearning_app.ui_ux.UserScreens.Instructor.InstructorScreen.InstructorDashboardScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +33,12 @@ class MainActivity : ComponentActivity() {
                 WindowCompat.setDecorFitsSystemWindows(window, false)
                 AppNavigation(navController = navController)
                //VideoScreen()
+//                InstructorDashboardScreen(
+//                    userProfileImageRes = R.drawable.dbis_project_logo_amber_removebg,
+//                    userName = "",
+//                    userEmail = ""
+//                )
+                //DashboardScreen()
             }
         }
     }

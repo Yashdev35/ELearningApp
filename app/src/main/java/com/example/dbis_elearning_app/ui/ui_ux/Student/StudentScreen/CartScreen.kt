@@ -1,5 +1,6 @@
 package com.example.dbis_elearning_app.ui.ui_ux.Student.StudentScreen
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,15 +17,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.dbis_elearning_app.PaymentActivity
 import com.example.dbis_elearning_app.ui.theme.darkColorScheme
 
 @Composable
 fun CartScreen() {
-
+val context = LocalContext.current
     var cartItems by remember { mutableStateOf(listOf(
         CartItem("The Complete Web Development Bootcamp", "Dr. Angela Yu", 3099.0, "https://placeholder.com/course1.jpg"),
         CartItem("Machine Learning A-Z™: Hands-On Python & R In Data Science", "Kirill Eremenko, Hadelin de Ponteves", 3499.0, "https://placeholder.com/course2.jpg")
@@ -83,7 +86,10 @@ fun CartScreen() {
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = { /* Handle checkout */ },
+                    onClick = {
+                        val intent = Intent(context, PaymentActivity::class.java)
+                        context.startActivity(intent)
+                              },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = darkColorScheme.primary)
                 ) {

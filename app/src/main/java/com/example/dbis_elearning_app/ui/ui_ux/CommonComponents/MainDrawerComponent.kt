@@ -48,7 +48,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.dbis_elearning_app.R
+import com.example.dbis_elearning_app.data.model.Student
 import com.example.dbis_elearning_app.ui.theme.darkColorScheme
+import com.example.dbis_elearning_app.ui_ux.UserScreens.Student.Login.DisplayData
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -111,6 +113,7 @@ fun MainDrawer(
 
 @Composable
 fun DrawerSheetContent(
+    student : DisplayData,
     onNavigateToSettings: () -> Unit = {},
     onNavigateToAccountSettings: () -> Unit = {},
     onNavigateToContactDetails: () -> Unit = {},
@@ -136,7 +139,7 @@ fun DrawerSheetContent(
                     .background(darkColorScheme.surface)
             ) {
                 Image(
-                    painter = rememberAsyncImagePainter("https://placeholder.com/user.jpg"),
+                    painter = rememberAsyncImagePainter(student.profilepic),
                     contentDescription = "Profile Picture",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
@@ -146,13 +149,13 @@ fun DrawerSheetContent(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "John Doe",
+                text = student.name,
                 style = MaterialTheme.typography.titleLarge,
                 color = darkColorScheme.onBackground
             )
 
             Text(
-                text = "john.doe@example.com",
+                text = student.email,
                 style = MaterialTheme.typography.bodyMedium,
                 color = darkColorScheme.onBackground.copy(alpha = 0.7f)
             )

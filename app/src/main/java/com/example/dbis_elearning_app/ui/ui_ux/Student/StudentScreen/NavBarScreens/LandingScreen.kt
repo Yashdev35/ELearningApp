@@ -1,10 +1,19 @@
 package com.example.dbis_elearning_app.ui.ui_ux.Student.StudentScreen.NavBarScreens
 
+import LoadingDialog
+import android.app.Activity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.dbis_elearning_app.R
@@ -13,38 +22,66 @@ import com.example.dbis_elearning_app.ui.ui_ux.CommonComponents.DBIS_Custom_Bott
 import com.example.dbis_elearning_app.ui.ui_ux.CommonComponents.DrawerSheetContent
 import com.example.dbis_elearning_app.ui.ui_ux.CommonComponents.MainDrawer
 import com.example.dbis_elearning_app.ui.ui_ux.Student.StudentScreen.CartScreen
+import com.example.dbis_elearning_app.ui_ux.UserScreens.Student.Login.DisplayData
 import com.example.dbis_elearning_app.ui_ux.UserScreens.Student.StudentScreen.Certificate
 import com.example.dbis_elearning_app.ui_ux.UserScreens.Student.StudentScreen.HomePage
 import com.example.dbis_elearning_app.ui_ux.UserScreens.Student.StudentScreen.StudentDashBoard
+import com.example.dbis_elearning_app.viewModel.AuthViewModel
 import com.example.dbis_elearning_app.viewModel.StudentViewModel.StudentNavigationViewModel
+
 
 @Composable
 fun LandingScreen(
+    authViewModel: AuthViewModel = hiltViewModel(),
     studentNavigationViewModel: StudentNavigationViewModel,
     navController: NavController
 ){
-    MainDrawer(
-        sheetContent = {
-                       DrawerSheetContent()
-        },
-        mainContent = { LandScrMainCont(studentNavigationViewModel = studentNavigationViewModel,navController)},
-        bottomBar = {
-                    DBIS_Custom_BottomBar(items = studentNavigationViewModel.items, onItemSelected =
-                    {itemIndex->
-                        when(itemIndex){
-                            0 -> {studentNavigationViewModel.navigationItem = NavigationItem.HOME}
-                            1 -> {studentNavigationViewModel.navigationItem = NavigationItem.CAREER}
-                            2 -> {studentNavigationViewModel.navigationItem = NavigationItem.LEARN}
-                            3 -> {studentNavigationViewModel.navigationItem = NavigationItem.SEARCH}
-                            4 -> {studentNavigationViewModel.navigationItem = NavigationItem.PROFILE}
-                        }
-                    })
-        },
-    )
+    val disData = DisplayData()
+    var isloading by remember{ mutableStateOf(true) }
+    val context = LocalContext.current
+    LaunchedEffect(Unit){
+        authViewModel.login(
+            context as Activity, onSuccess = {
+                disData.name = it.name
+                disData.email = it.email
+                disData.profilepic = it.profilepic
+                isloading = false
+            }, onFailure = {
+                isloading = false
+            }
+        )
+    }
+    if(isloading){
+        LoadingDialog()
+    }else{
+
+        MainDrawer(
+            sheetContent = {
+                DrawerSheetContent(
+                    disData
+                )
+            },
+            mainContent = { LandScrMainCont(studentNavigationViewModel = studentNavigationViewModel,navController,
+                authViewModel)},
+            bottomBar = {
+                DBIS_Custom_BottomBar(items = studentNavigationViewModel.items, onItemSelected =
+                {itemIndex->
+                    when(itemIndex){
+                        0 -> {studentNavigationViewModel.navigationItem = NavigationItem.HOME}
+                        1 -> {studentNavigationViewModel.navigationItem = NavigationItem.CAREER}
+                        2 -> {studentNavigationViewModel.navigationItem = NavigationItem.LEARN}
+                        3 -> {studentNavigationViewModel.navigationItem = NavigationItem.SEARCH}
+                        4 -> {studentNavigationViewModel.navigationItem = NavigationItem.PROFILE}
+                    }
+                })
+            },
+        )
+    }
 }
 
 @Composable
-fun LandScrMainCont(studentNavigationViewModel: StudentNavigationViewModel, navController: NavController){
+fun LandScrMainCont(studentNavigationViewModel: StudentNavigationViewModel, navController: NavController,
+                    authViewModel: AuthViewModel){
     Box(
         modifier = Modifier.fillMaxSize(),
     ){
@@ -82,8 +119,8 @@ fun LandScrMainCont(studentNavigationViewModel: StudentNavigationViewModel, navC
                     subjects = subjects,
                     certificates = certificates,
                     userProfileImageRes = profileImageRes,
-                    userName = userName,
-                    userEmail = userEmail,
+                    userName = authViewModel.student.value!!.name,
+                    userEmail = authViewModel.student.value!!.email,
                     onEditProfile = { }
                 )}
         }

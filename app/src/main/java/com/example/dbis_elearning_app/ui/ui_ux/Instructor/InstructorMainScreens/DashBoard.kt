@@ -1,5 +1,6 @@
 package com.example.dbis_elearning_app.ui_ux.UserScreens.Instructor.InstructorScreen
 
+import LoadingDialog
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -7,11 +8,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,16 +29,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.dbis_elearning_app.R
+import com.example.dbis_elearning_app.data.student.model.EducationLevel
 import com.example.dbis_elearning_app.ui.ui_ux.CommonComponents.ProfileSection
 import com.example.dbis_elearning_app.ui_ux.UserScreens.Student.StudentScreen.BlackTransparent
 import com.example.dbis_elearning_app.ui_ux.UserScreens.Student.StudentScreen.PureWhite
+import com.example.dbis_elearning_app.viewModel.StudentViewModel.StudentApiViewModels.StudentDataViewModel
+import kotlinx.coroutines.launch
 
 data class Course(val name: String, val newStudents: Int, val totalHours: Int, val totalStudents: Int)
 
@@ -45,7 +53,12 @@ fun InstructorDashboardScreen(
         userProfileImageRes: Int,
         userName: String,
         userEmail: String,
+        viewModel: StudentDataViewModel = hiltViewModel(),
     ) {
+    if(viewModel.isLoading.value){
+        LoadingDialog()
+    }
+    val scope = rememberCoroutineScope()
     var isEditingEducation by remember { mutableStateOf(false) }
     var educationLevel by remember { mutableStateOf(EducationLevel()) }
     var isEditingProfile by remember { mutableStateOf(false) }
@@ -76,9 +89,13 @@ fun InstructorDashboardScreen(
                 item {
                     EducationSection(
                         isEditing = isEditingEducation,
-                        onEditClick = { isEditingEducation = !isEditingEducation },
+                        onEditClick = { isEditingEducation = !isEditingEducation
+                                      educationLevel = EducationLevel() },
                         educationLevel = educationLevel,
-                        onEducationLevelChange = { educationLevel = it }
+                        onEducationLevelChange = { educationLevel = it },
+                        onSaved = { scope.launch {
+                           viewModel.updateEducation(educationLevel)
+                        }}
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }
@@ -91,21 +108,32 @@ fun EducationSection(
     isEditing: Boolean,
     onEditClick: () -> Unit,
     educationLevel: EducationLevel,
-    onEducationLevelChange: (EducationLevel) -> Unit
+    onEducationLevelChange: (EducationLevel) -> Unit,
+    onSaved: () -> Unit = {}
 ) {
-    val level1Options = listOf("School", "University", "Other")
+    val level1Options = listOf("SCHOOL", "UNDERGRADUATE", "POSTGRADUATE")
     val level2OptionsMap = mapOf(
-        "School" to listOf("11th", "12th"),
-        "University" to listOf("B.Tech", "B.Sc"),
-        "Other" to listOf("Diploma", "Certificate")
+        "SCHOOL" to listOf("ELEVENTH", "TWELFTH"),
+        "UNDERGRADUATE" to listOf("FIRST", "SECOND", "THIRD", "FOURTH"),
+        "POSTGRADUATE" to listOf("FIRST", "SECOND")
     )
     val level3OptionsMap = mapOf(
-        "11th" to listOf("Science", "Commerce", "Arts"),
-        "12th" to listOf("Science", "Commerce", "Arts"),
-        "B.Tech" to listOf("CSE", "ECE", "Mechanical"),
-        "B.Sc" to listOf("Physics", "Chemistry", "Maths"),
-        "Diploma" to listOf("Engineering", "Arts"),
-        "Certificate" to listOf("Skill Development", "Professional Training")
+        "ELEVENTH" to listOf("SCIENCE", "COMMERCE", "ARTS"),
+        "TWELFTH" to listOf("SCIENCE", "COMMERCE", "ARTS"),
+        "FIRST" to listOf("BTECH", "MTECH", "BSC", "MSC", "PHD"),
+        "SECOND" to listOf("BTECH", "MTECH", "BSC", "MSC", "PHD"),
+        "THIRD" to listOf("BTECH", "MTECH", "BSC", "MSC", "PHD"),
+        "FOURTH" to listOf("BTECH", "MTECH", "BSC", "MSC", "PHD")
+    )
+    val level4OptionsMap = mapOf(
+        "POSTGRADUATE" to listOf(
+            "COMPUTER_SCIENCE",
+            "MECHANICAL_ENGINEERING",
+            "ELECTRICAL_ENGINEERING",
+            "CIVIL_ENGINEERING",
+            "CHEMISTRY",
+            "PHYSICS"
+        )
     )
 
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -181,6 +209,28 @@ fun EducationSection(
             }
         }
     }
+    if (isEditing && educationLevel.level1 == "POSTGRADUATE" && educationLevel.level3.isNotEmpty()) {
+        DropdownField(
+            label = "Specialization",
+            options = level4OptionsMap["POSTGRADUATE"] ?: emptyList(),
+            selectedOption = educationLevel.level4,
+            onOptionSelected = {
+                onEducationLevelChange(educationLevel.copy(level4 = it))
+            }
+        )
+    }
+    if(isEditing) {
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = {
+               onSaved()
+            },
+            modifier = Modifier.wrapContentSize()
+        ) {
+            Text("Save")
+        }
+    }
+
 }
 
 @Composable
@@ -212,7 +262,7 @@ fun DropdownField(
                     Icon(
                         imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
                         contentDescription = "Expand Dropdown",
-                        tint = PureWhite
+                        tint = Color.Red
                     )
                 }
             }
@@ -235,12 +285,6 @@ fun DropdownField(
         }
     }
 }
-
-data class EducationLevel(
-    val level1: String = "",
-    val level2: String = "",
-    val level3: String = ""
-)
 
 @Preview
 @Composable

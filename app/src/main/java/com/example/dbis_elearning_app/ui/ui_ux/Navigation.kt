@@ -1,6 +1,6 @@
 package com.example.dbis_elearning_app.ui_ux.UserScreens
 
-import LoginScreen
+import AuthScreen
 import RegisterScreen
 import android.app.Activity
 import androidx.compose.runtime.Composable
@@ -13,7 +13,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.example.dbis_elearning_app.ui_ux.UserScreens.Instructor.Navigation.InstructorApp
 import com.example.dbis_elearning_app.ui_ux.UserScreens.Instructor.Navigation.ScrInstructorApp
 import com.example.dbis_elearning_app.ui_ux.UserScreens.LoginScreens.AccountTypeScreen
@@ -34,22 +33,15 @@ fun AppNavigation(
     NavHost(navController = navController, startDestination = ScrLogo){
         composable<ScrLogo> {
             LogoScreen(
-                onTimeout = { navController.navigate(ScrLoginScreen) },
+                onTimeout = { navController.navigate(ScrAccountTypeSelector(name = "Sir!")) },
                 isUserDataLoaded = { return@LogoScreen false }
             )
-        }
-        composable<ScrLoginScreen> {
-            val authViewModel: AuthViewModel = hiltViewModel()
-            val user by remember { authViewModel.student }
-            LoginScreen(student = user, onLogin = {authViewModel.login(activity)}, navController = navController,
-                onLogout = {authViewModel.logout(activity)})
         }
         composable<ScrRegisterScreen> {
             RegisterScreen(navController = navController)
         }
         composable<ScrAccountTypeSelector> {
-            val args = it.toRoute<ScrAccountTypeSelector>()
-            AccountTypeScreen(userName = args.name,
+            AccountTypeScreen(userName = "Sir!",
                 onTypeSelected = { type ->
                 when(type){
                     "Student" -> navController.navigate(ScrStudentApp)

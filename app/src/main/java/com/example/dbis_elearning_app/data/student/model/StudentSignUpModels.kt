@@ -1,10 +1,12 @@
 package com.example.dbis_elearning_app.data.student.model
 
+import com.google.gson.annotations.SerializedName
+
 // UserSignUpRequest.kt
 data class UserSignUpRequest(
-    val name: String,
-    val email: String,
-    val password: String
+    @SerializedName("name") val name: String,
+    @SerializedName("email") val email: String,
+    @SerializedName("password") val password: String
 )
 
 // ApiResponse.kt

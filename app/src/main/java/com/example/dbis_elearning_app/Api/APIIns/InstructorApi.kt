@@ -1,6 +1,7 @@
 package com.example.dbis_elearning_app.Api.APIIns
 
 import com.example.dbis_elearning_app.data.instructor.model.Instructor
+import com.example.dbis_elearning_app.data.model.Student
 import com.example.dbis_elearning_app.data.model.VideoUploadResponse
 import com.example.dbis_elearning_app.data.student.model.ApiResponse
 import okhttp3.MultipartBody
@@ -17,6 +18,9 @@ import retrofit2.http.Path
 interface InstructorApi {
     @POST("api/v1/instructor/app/signup")
     suspend fun createInstructor(@Body instructor: Instructor): Response<ApiResponse<Instructor>>
+
+    @POST("api/v1/instructor/app/signup")
+    suspend fun signUpUserWith(@Body accessToken: String): Response<ApiResponse<Instructor>>
 
     @GET("api/v1/instructor/app/{id}")
     suspend fun getInstructor(@Path("id") id: String): Response<ApiResponse<Instructor>>

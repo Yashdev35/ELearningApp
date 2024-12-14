@@ -120,6 +120,14 @@ dependencies {
     implementation ("androidx.media3:media3-exoplayer-hls:$media3_version")  // For HLS support
     implementation ("androidx.media3:media3-ui:$media3_version")
     implementation ("androidx.media3:media3-common:$media3_version")
+    implementation(libs.okhttp.v4120)
+    implementation(libs.logging.interceptor)
+
+    // Gson
+    implementation(libs.gson)
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
 //    // Cloudinary SDK for Kotlin
 //    implementation(libs.cloudinary.core)
 //
